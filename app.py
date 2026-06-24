@@ -12,7 +12,7 @@ imputer_cat = joblib.load('imputer_cat.pkl')
 precio_mediano_marca = joblib.load('precio_mediano_marca.pkl')
 mediana_global = joblib.load('mediana_global.pkl')
 
-MARCAS_DISPONIBLES = sorted(precio_mediano_marca.index.tolist())
+MARCAS_DISPONIBLES = sorted(precio_mediano_marca.keys())
 
 
 @app.route('/', methods=['GET'])
