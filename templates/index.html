@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Precio de Autos Usados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Predicción de Precio de Auto Usado</h1>
+        <p>Ingresa los datos del vehículo para obtener una estimación de su precio de venta.</p>
+
+        {% if error %}
+        <div class="mensaje-error">Error: {{ error }}</div>
+        {% endif %}
+
+        {% if resultado is not none %}
+        <div class="mensaje-resultado">Precio estimado: ${{ "{:,.2f}".format(resultado) }} USD</div>
+        {% endif %}
+
+        <form action="/predecir" method="POST">
+            <label for="brand">Marca del vehículo:</label>
+            <select name="brand" id="brand" required>
+                {% for marca in marcas %}
+                <option value="{{ marca }}">{{ marca }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="model_year">Año del modelo:</label>
+            <input type="number" name="model_year" id="model_year" min="1990" max="2026" required>
+
+            <label for="milage">Kilometraje (en millas):</label>
+            <input type="number" name="milage" id="milage" min="0" step="1" required>
+
+            <label for="engine_hp">Potencia del motor (HP, opcional):</label>
+            <input type="number" name="engine_hp" id="engine_hp" min="0" step="1">
+
+            <label for="engine_litros">Litraje del motor (Litros, opcional):</label>
+            <input type="number" name="engine_litros" id="engine_litros" min="0" step="0.1">
+
+            <label for="tuvo_accidente">¿El vehículo tiene historial de accidentes?</label>
+            <select name="tuvo_accidente" id="tuvo_accidente" required>
+                <option value="0">No, ninguno reportado</option>
+                <option value="1">Sí, al menos uno reportado</option>
+            </select>
+
+            <button type="submit">Calcular precio estimado</button>
+        </form>
+    </div>
+</body>
+</html>
